@@ -2,7 +2,10 @@
 
 Holy Bible Shona and English Free.
 
-## Getting Started
+## About
+This is a rewrite on my first android application using Flutter. It's also my first flutter application :-D
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+## Download
+You can download the application from PlayStore, [Holy Bible with Shona](https://play.google.com/store/apps/details?id=tech.diggle.apps.bible.bhaibheridzvenemuchishona)
+
+contact me via email, [eddie@diggle.tech](mailto:eddie@diggle.tech).
