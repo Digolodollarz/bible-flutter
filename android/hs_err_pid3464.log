@@ -1,0 +1,35 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 32744 bytes for ChunkPool::allocate
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#
+#  Out of Memory Error
+#
+# ]Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+
+Current CompileTask:
+C1:  18345  844       3       org.gradle.internal.logging.text.AbstractLineChoppingStyledTextOutput$1::execute (130 bytes)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000001bd86800 JavaThread "Thread-0" [_thread_new, id=15964, stack(0x0000000000000000,0x0000000000000000)]
+  0x000000001d410000 JavaThread "DisconnectableInputStream source reader" daemon [_thread_in_native, id=2892, stack(0x000000001e900000,0x000000001ea00000)]
+  0x000000001bdce000 JavaThread "Service Thread" daemon [_thread_blocked, id=13996, stack(0x000000001c8f0000,0x000000001c9f0000)]
+=>0x000000001bd40800 JavaThread "C1 CompilerThread3" daemon [_thread_in_native, id=18624, stack(0x000000001c7f0000,0x000000001c8f0000)]
+  0x000000001bd33800 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=21208, stack(0x000000001c6f0000,0x000000001c7f0000)]
+  0x000000001bd2c800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=20664, stack(0x000000001c5f0000,0x000000001c6f0000)]
+  0x000000001bd29800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=19188, stack(0x000000001c4f0000,0x000000001c5f0000)]
+  0x000000001bd28000 JavaThread "Attach Listener" daemon [_thread_blocked, id=20824, stack(0x000000001c3f0000,0x000000001c4f0000)]
+  0x000000001bd27000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=21432
