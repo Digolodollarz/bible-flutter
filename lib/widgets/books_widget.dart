@@ -58,9 +58,10 @@ class _BooksWidgetState extends State<BooksWidget> {
   }
 
   _goToBook(Book book) {
-   Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context){
-     return ChapterListPage(book: book);
-   }));
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (BuildContext context) {
+      return ChapterListPage(book: book);
+    }));
   }
 }
 
@@ -72,20 +73,29 @@ class BookList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-              border: BorderDirectional(
-                  bottom: BorderSide(color: Theme.of(context).dividerColor))),
-          child: ListTile(
-            onTap: () => callback(books[index]),
-            title: Text('${books[index].name}',
-            style: Theme.of(context).textTheme.body1,),
-          ),
-        );
-      },
-      itemCount: books.length,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return Container(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: ListTile(
+                onTap: () => callback(books[index]),
+                title: Text(
+                  '${books[index].name}',
+                  style: Theme.of(context).textTheme.body1,
+                ),
+                subtitle: Text('${books[index].altName}'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+              ),
+            ),
+          );
+        },
+        itemCount: books.length,
+      ),
     );
   }
 
