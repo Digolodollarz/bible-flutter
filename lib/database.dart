@@ -109,7 +109,10 @@ class DatabaseProvider {
     if (db == null) {
       print('null db');
     }
-    List<Map> books = await db.query(keyTable);
+    List<Map> books = await db.rawQuery(""
+        "SELECT $keyTable.b, $keyTable.n, $keyTableAlt.n as _n"
+        " FROM '$keyTable' LEFT OUTER JOIN '$keyTableAlt'"
+        " using(b)");
     if (books.length > 0) {
       return books.map((book) => Book.fromMap(book)).toList();
     }
