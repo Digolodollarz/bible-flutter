@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:bible/application.dart';
 import 'package:bible/database.dart';
 import 'package:bible/localization.dart';
@@ -11,6 +12,7 @@ import 'package:bible/theme.dart';
 import 'package:bible/widgets/books_widget.dart';
 import 'package:bible/widgets/devotional_widget.dart';
 import 'package:bible/widgets/notes_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,49 +30,45 @@ class HomePageState extends State<HomePage> {
   Book book;
   TabController tabController;
 
+  int _bottomNavBarSelectedIndex = 0;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  void _onBottomNavBarItemTapped(int index) {
+    setState(() {
+      _bottomNavBarSelectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     theme = Theme.of(context);
     _searchDelegate = _MainSearchDelegate(_openBook, Theme.of(context));
 
-    return DefaultTabController(
-      length: book == null ? 3 : 4,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context).text('app_title')),
-          actions: <Widget>[
-            IconButton(
-              tooltip: 'Search',
-              icon: const Icon(Icons.search),
-              onPressed: () async {
-                await showSearch<dynamic>(
-                  context: context,
-                  delegate: _searchDelegate,
-                );
-              },
+    final _pageTitle = Text(AppLocalizations.of(context).text('app_title'));
+
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: !Platform.isIOS
+          ? AppBar(
+              title: _pageTitle,
+              actions: <Widget>[
+                _buildSearchAction(context),
+                _buildTranslateMenu(context),
+                _buildOverflowMenu(context),
+              ],
+            )
+          : CupertinoNavigationBar(
+              middle: _pageTitle,
+              leading: _buildTranslateMenu(context),
+              trailing: _buildSearchAction(context),
             ),
-            _buildTranslateMenu(context),
-            _buildOverflowMenu(context),
-          ],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: AppLocalizations.of(context).text('bible')),
-              Tab(text: AppLocalizations.of(context).text('devotional')),
-              Tab(text: AppLocalizations.of(context).text('notes')),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            this.book == null ? BooksWidget() : BooksWidget(book: this.book),
-            DevotionalWidget(scaffoldKey: _scaffoldKey),
-            NotesWidget(),
-          ],
-        ),
-      ),
+      body: [
+        this.book == null ? BooksWidget() : BooksWidget(book: this.book),
+        DevotionalWidget(scaffoldKey: _scaffoldKey),
+        NotesWidget(),
+      ].elementAt(_bottomNavBarSelectedIndex),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
@@ -78,6 +76,19 @@ class HomePageState extends State<HomePage> {
     setState(() {
       this.book = book;
     });
+  }
+
+  IconButton _buildSearchAction(BuildContext context) {
+    return IconButton(
+      tooltip: 'Search',
+      icon: const Icon(Icons.search),
+      onPressed: () async {
+        await showSearch<dynamic>(
+          context: context,
+          delegate: _searchDelegate,
+        );
+      },
+    );
   }
 
   _buildTranslateMenu(BuildContext context) {
@@ -125,7 +136,8 @@ class HomePageState extends State<HomePage> {
               title: Text('Settings'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
                   return SettingsPage();
                 }));
               },
@@ -136,7 +148,8 @@ class HomePageState extends State<HomePage> {
               title: Text('About'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
                   return AboutPage();
                 }));
               },
@@ -147,9 +160,32 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  _buildIOSHome() {
+    return CupertinoPageScaffold(
+      child: Text("Not Text"),
+    );
+  }
 
-  _buildIOSHome(){
-
+  BottomNavigationBar _buildBottomNavigationBar(BuildContext context) {
+    return BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.local_library),
+          title: Text(AppLocalizations.of(context).text('bible')),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today),
+          title: Text(AppLocalizations.of(context).text('devotional')),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.book),
+          title: Text(AppLocalizations.of(context).text('notes')),
+        ),
+      ],
+      currentIndex: _bottomNavBarSelectedIndex,
+      selectedItemColor: Theme.of(context).accentColor,
+      onTap: _onBottomNavBarItemTapped,
+    );
   }
 }
 
@@ -217,8 +253,10 @@ class _MainSearchDelegate extends SearchDelegate {
                 List<Verse> results = snapshot.data;
                 return Column(
                   children: <Widget>[
-                    Text(results.length.toString() + ' results',
-                    style: Theme.of(context).textTheme.body1,),
+                    Text(
+                      results.length.toString() + ' results',
+                      style: Theme.of(context).textTheme.body1,
+                    ),
                     Expanded(child: _resultList(results))
                   ],
                 );
