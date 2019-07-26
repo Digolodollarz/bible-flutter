@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bible/application.dart';
 import 'package:bible/localization.dart';
 import 'package:bible/pages/home.dart';

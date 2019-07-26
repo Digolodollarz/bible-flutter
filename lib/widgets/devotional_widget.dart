@@ -90,6 +90,7 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
                   child: Text(verseText),
                   onPressed: () {
                     showModalBottomSheet<void>(
+                      isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) =>
                           _buildChapterModalBottomSheet(context, verseText),
@@ -136,11 +137,10 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
     }
 
     return Container(
-      child: Container(
-        child: ReadPage(
-          book: Book(name: bookName),
-          chapter: Chapter(chapter: chapter, name: bookName),
-        ),
+      height: MediaQuery.of(context).size.height * 0.80,
+      child: ReadPage(
+        book: Book(name: bookName),
+        chapter: Chapter(chapter: chapter, name: bookName),
       ),
     );
   }

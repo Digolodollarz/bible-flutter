@@ -146,6 +146,11 @@ class HomePageState extends State<HomePage> {
       },
     );
   }
+
+
+  _buildIOSHome(){
+
+  }
 }
 
 //TODO: Set the theme for search delegate to match rest of application

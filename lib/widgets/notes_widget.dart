@@ -58,58 +58,71 @@ class _NotesWidgetState extends State<NotesWidget> {
           onTap: () {
             print('Ndabaiwa');
           },
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        notes[index].title,
-                        style: Theme.of(context).textTheme.headline,
-                      ),
-                      Text(
-                        notes[index].text ?? '',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
-                      Container(
-                        decoration:
-                            BoxDecoration(border: Border(top: BorderSide())),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Text('${notes[index].bookName} '
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          notes[index].title,
+                          style: Theme.of(context).textTheme.body2,
+                        ),
+                        Text(
+                          notes[index].text ?? '',
+                          style: Theme.of(context).textTheme.body1,
+                        ),
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () => print("Paumire"),
+                                child: Text(
+                                  '${notes[index].bookName} '
                                   '${notes[index].chapter} : '
                                   '${notes[index].startVerse}-'
-                                  '${notes[index].endVerse}'),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.share),
-                              onPressed: () {
-                                Share.share('${notes[index].title} \n'
-                                    '${notes[index].text}\n'
-                                    '${notes[index].bookName} '
-                                    '${notes[index].chapter} : '
-                                    '${notes[index].startVerse}'
-                                    '-${notes[index].endVerse}\n'
-                                    'Holy Bible with Shona FREE');
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete_forever),
-                              onPressed: () => _deleteNote(notes[index].id),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                                  '${notes[index].endVerse}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .body1
+                                      .copyWith(),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.share),
+                                onPressed: () {
+                                  Share.share('${notes[index].title} \n'
+                                      '${notes[index].text}\n'
+                                      '${notes[index].bookName} '
+                                      '${notes[index].chapter} : '
+                                      '${notes[index].startVerse}'
+                                      '-${notes[index].endVerse}\n'
+                                      'Holy Bible with Shona FREE');
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete_forever),
+                                onPressed: () => _deleteNote(notes[index].id),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
             ),
           ),
         );

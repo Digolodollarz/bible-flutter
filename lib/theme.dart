@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 ThemeData getAppTheme(Brightness brightness) {
+  ThemeData _base = ThemeData(
+    fontFamily: 'Rubik',
+    brightness: brightness,
+  );
   return brightness == Brightness.dark
-      ? _getDarkAppTheme()
-      : _getLightAppTheme();
+      ? _getDarkAppTheme(_base)
+      : _getLightAppTheme(_base);
 }
 
-ThemeData _getLightAppTheme() {
-  ThemeData base = ThemeData(
-    fontFamily: 'Rubik',
-    brightness: Brightness.light,
-  );
+ThemeData _getLightAppTheme(ThemeData base) {
 
   return base.copyWith(
     primaryColor: Colors.lightBlue,
@@ -21,16 +21,38 @@ ThemeData _getLightAppTheme() {
   );
 }
 
-ThemeData _getDarkAppTheme() {
-  ThemeData base = ThemeData(
-    fontFamily: 'Rubik',
-    brightness: Brightness.dark,
-  );
+ThemeData _getDarkAppTheme(ThemeData base) {
   return base.copyWith(
+    brightness: Brightness.dark,
     indicatorColor: Colors.red[400],
     accentColor: Colors.red[200],
     textTheme: _getTextTheme(base.textTheme),
+//    backgroundColor: Colors.black,
   );
+}
+
+ThemeData _getRedAppTheme(ThemeData base){
+  return base.copyWith(
+    primaryColor: Colors.red,
+    primaryColorLight: Colors.red[400],
+    primaryColorDark: Colors.red[700],
+    indicatorColor: Colors.blue[400],
+    accentColor: Colors.blue[500],
+    textTheme: _getTextTheme(base.textTheme),
+    backgroundColor: Colors.white,
+  );
+}
+
+ThemeData _getBlueAppTheme(){
+
+}
+
+ThemeData _getBrownAppTheme(){
+
+}
+
+ThemeData _getCustomAppTheme(){
+
 }
 
 _getTextTheme(TextTheme base) {
