@@ -1,6 +1,7 @@
 final columnId = '_id';
 final columnBook = 'b';
 final columnName = 'n';
+final columnNameAlt = '_n';
 final columnVId = 'id';
 final columnChapter = 'c';
 final columnVerse = 'v';
@@ -24,12 +25,14 @@ final String columnNoteChapter = "chapter";
 class Book {
   int id;
   String name;
+  String altName;
 
-  Book({this.id, this.name});
+  Book({this.id, this.name, this.altName});
 
   Book.fromMap(Map<String, dynamic> map) {
     id = map[columnBook];
     name = map[columnName];
+    altName = map[columnNameAlt];
   }
 }
 
