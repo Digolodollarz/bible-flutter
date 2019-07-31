@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bible/database.dart';
 import 'package:bible/models.dart';
+import 'package:bible/pages/read_page.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
@@ -54,9 +55,24 @@ class _NotesWidgetState extends State<NotesWidget> {
   _buildNotesList(BuildContext context, List<Note> notes) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
+        final _note = notes[index];
         return InkWell(
           onTap: () {
-            print('Ndabaiwa');
+            final Book _book = Book(
+                id: _note.book, name: _note.bookName);
+            final Chapter _chapter = Chapter(
+              id: _note.chapter,
+              chapter: _note.chapter,
+              book: _note.book,
+              name: _note.bookName,
+            );
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return ReadPage(
+                    book: _book,
+                    chapter: _chapter,
+                  );
+                }));
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -82,7 +98,23 @@ class _NotesWidgetState extends State<NotesWidget> {
                           child: Row(
                             children: <Widget>[
                               InkWell(
-                                onTap: () => print("Paumire"),
+                                onTap: () {
+                                  final Book _book = Book(
+                                      id: _note.book, name: _note.bookName);
+                                  final Chapter _chapter = Chapter(
+                                    id: _note.chapter,
+                                    chapter: _note.chapter,
+                                    book: _note.book,
+                                    name: _note.bookName,
+                                  );
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                    return ReadPage(
+                                      book: _book,
+                                      chapter: _chapter,
+                                    );
+                                  }));
+                                },
                                 child: Text(
                                   '${notes[index].bookName} '
                                   '${notes[index].chapter} : '
