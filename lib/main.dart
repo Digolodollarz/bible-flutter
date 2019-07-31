@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app_state.dart';
+
 void main() {
-  runApp(new MyApp());
+  runApp(AppState(child: new MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -42,7 +44,11 @@ class MyAppState extends State<MyApp> {
         if (snapshot.hasData) {
           return new MaterialApp(
             title: '',
-            theme: getAppTheme(brightness),
+            theme: getAppTheme(
+              theme: AppState.of(context).theme,
+              autoDark: AppState.of(context).autoDark,
+              autoDarkBlack: AppState.of(context).autoDarkBlack,
+            ),
             home: new HomePage(),
             localizationsDelegates: [
               _appLocaleDelegate,

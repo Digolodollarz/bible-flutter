@@ -26,7 +26,7 @@ class HomePageState extends State<HomePage> {
   bool searching = false;
   bool dark = false;
   SearchDelegate _searchDelegate;
-  ThemeData theme = getAppTheme(Brightness.light);
+  ThemeData theme = getAppTheme(theme: "blue");
   Book book;
   TabController tabController;
 

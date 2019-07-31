@@ -44,6 +44,7 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
                               textAlign: TextAlign.start,
                             ),
                           ),
+                          buildBottomNav(snapshot.data.verse, context),
                           Container(
                               child: Text(
                                   _parseDevotionalText(snapshot.data.text))),
@@ -52,7 +53,6 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
                     ),
                   ),
                 ),
-                buildBottomNav(snapshot.data.verse, context)
               ],
             );
           } else {
@@ -66,49 +66,45 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
     );
   }
 
-  Center buildBottomNav(String verseText, BuildContext context) {
-    return new Center(
-      child: Row(
-        children: <Widget>[
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  offset--;
-                });
-              },
-              icon: Icon(Icons.arrow_back)),
-          Expanded(
-            child: FutureBuilder<Chapter>(
-              future: _parseVerse(verseText, context),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                } else if (snapshot.data == null) {
-                  return Text('From $verseText');
-                }
+  Widget buildBottomNav(String verseText, BuildContext context) {
+    return Row(
+      children: <Widget>[
+        FutureBuilder<Chapter>(
+          future: _parseVerse(verseText, context),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+            } else if (snapshot.data == null) {
+              return Text('From $verseText');
+            }
 
-                return RaisedButton(
-                  child: Text(verseText),
-                  onPressed: () {
-                    showModalBottomSheet<void>(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) =>
-                          _buildChapterModalBottomSheet(context, verseText),
-                    );
-                  },
+            return RaisedButton(
+              child: Text(verseText),
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) =>
+                      _buildChapterModalBottomSheet(context, verseText),
                 );
               },
-            ),
-          ),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  offset++;
-                });
-              },
-              icon: Icon(Icons.arrow_forward)),
-        ],
-      ),
+            );
+          },
+        ),
+        IconButton(
+            onPressed: () {
+              setState(() {
+                offset--;
+              });
+            },
+            icon: Icon(Icons.arrow_back)),
+        IconButton(
+            onPressed: () {
+              setState(() {
+                offset++;
+              });
+            },
+            icon: Icon(Icons.arrow_forward)),
+      ],
     );
   }
 

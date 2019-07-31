@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bible/database.dart';
 import 'package:bible/models.dart';
 import 'package:bible/pages/chapter_page.dart';
-import 'package:bible/pages/read_page.dart';
 import 'package:flutter/material.dart';
 
 class BooksWidget extends StatefulWidget {
@@ -50,11 +49,6 @@ class _BooksWidgetState extends State<BooksWidget> {
   Future<List<Book>> _getBooks() async {
     await db.openDefault(context);
     return db.getBooks();
-  }
-
-  Future<List<Chapter>> _getChapters() async {
-    await db.openDefault(context);
-    return db.getChapters(this.currentBook);
   }
 
   _goToBook(Book book) {

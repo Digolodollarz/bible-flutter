@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bible/database.dart';
 import 'package:bible/models.dart';
 import 'package:bible/pages/read_page.dart';
@@ -58,14 +60,13 @@ class ChapterList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          decoration: BoxDecoration(
-              border: BorderDirectional(
-                  bottom: BorderSide(color: Theme.of(context).dividerColor))),
+        return AndroidListCard(
           child: ListTile(
             onTap: () => _goToChapter(context, chapters[index]),
-            title: Text('${chapters[index].name} ${chapters[index].chapter}',
-            style: Theme.of(context).textTheme.body1,),
+            title: Text(
+              '${chapters[index].name} ${chapters[index].chapter}',
+              style: Theme.of(context).textTheme.body1,
+            ),
           ),
         );
       },
@@ -82,3 +83,21 @@ class ChapterList extends StatelessWidget {
     }));
   }
 }
+
+class AndroidListCard extends StatelessWidget {
+  final Widget child;
+
+  const AndroidListCard({Key key, @required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: child,
+      ),
+    );
+  }
+}
+
