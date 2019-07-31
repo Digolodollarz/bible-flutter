@@ -28,32 +28,30 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data != null) {
-            return Column(
-              children: <Widget>[
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            child: Text(
-                              snapshot.data.header,
-                              style: Theme.of(context).textTheme.headline,
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          buildBottomNav(snapshot.data.verse, context),
-                          Container(
-                              child: Text(
-                                  _parseDevotionalText(snapshot.data.text))),
-                        ],
+            return SingleChildScrollView(
+              child: Card(
+                margin: EdgeInsets.all(8),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          snapshot.data.header,
+                          style: Theme.of(context).textTheme.headline,
+                          textAlign: TextAlign.start,
+                        ),
                       ),
-                    ),
+                      buildBottomNav(snapshot.data.verse, context),
+                      Container(
+                          child: Text(
+                              _parseDevotionalText(snapshot.data.text))),
+                    ],
                   ),
                 ),
-              ],
+              ),
             );
           } else {
             return Text('Data is null');
@@ -78,6 +76,7 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
             }
 
             return RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: Text(verseText),
               onPressed: () {
                 showModalBottomSheet<void>(
@@ -133,7 +132,7 @@ class DevotionalWidgetState extends State<DevotionalWidget> {
     }
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.80,
+      height: MediaQuery.of(context).size.height - 96,
       child: ReadPage(
         book: Book(name: bookName),
         chapter: Chapter(chapter: chapter, name: bookName),
