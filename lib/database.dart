@@ -264,6 +264,7 @@ class DatabaseProvider {
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
+      File(path).createSync(recursive: true);
       // Save copied asset to documents
       await new File(path).writeAsBytes(bytes);
       print('created new database');
