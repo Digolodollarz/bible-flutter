@@ -20,12 +20,15 @@ class _AppStateState extends State<AppState> {
   String _theme;
   bool _autoDark;
   bool _autoDarkBlack;
+  double _fontSize;
 
   String get theme => _theme;
 
   bool get autoDark => _autoDark;
 
   bool get autoDarkBlack => _autoDarkBlack;
+
+  double get fontSize => _fontSize;
 
   void onThemeChange(String theme) {
     setState(() {
@@ -36,13 +39,18 @@ class _AppStateState extends State<AppState> {
   void onAutoDarkChange(bool value) {
     setState(() {
       _autoDark = value;
-      print('Autodark is ${value ? "dark" : "bright"}');
     });
   }
 
   void onAutoDarkBlackChange(bool value) {
     setState(() {
       _autoDarkBlack = value;
+    });
+  }
+
+  void onFontSizeChanged(double value){
+    setState(() {
+      _fontSize = value;
     });
   }
 
@@ -66,6 +74,7 @@ class _AppStateState extends State<AppState> {
       this._autoDark = preferences.getBool(PREFS_KEY_AUTO_DARK) ?? true;
       this._theme = preferences.getString(PREFS_KEY_THEME) ?? 'blue';
       this._autoDarkBlack = preferences.getBool(PREFS_KEY_DARK_BLACK) ?? false;
+      this._fontSize = preferences.getDouble(PREFS_KEY_FONT_SIZE) ?? 16;
     });
   }
 }

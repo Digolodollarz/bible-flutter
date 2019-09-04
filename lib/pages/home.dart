@@ -16,6 +16,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  final int initialIndex;
+
+  const HomePage({Key key, this.initialIndex}) : super(key: key);
+
   @override
   HomePageState createState() {
     return new HomePageState();
@@ -30,7 +34,7 @@ class HomePageState extends State<HomePage> {
   Book book;
   TabController tabController;
 
-  int _bottomNavBarSelectedIndex = 0;
+  int _bottomNavBarSelectedIndex;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -70,6 +74,12 @@ class HomePageState extends State<HomePage> {
       ].elementAt(_bottomNavBarSelectedIndex),
       bottomNavigationBar: _buildBottomNavigationBar(context),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _bottomNavBarSelectedIndex = widget.initialIndex;
   }
 
   _openBook(Book book) {

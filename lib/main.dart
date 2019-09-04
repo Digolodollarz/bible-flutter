@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bible/application.dart';
 import 'package:bible/localization.dart';
 import 'package:bible/pages/home.dart';
+import 'package:bible/pages/settings_page.dart';
 import 'package:bible/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,7 +39,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<SharedPreferences>(
       future: loadPreferences(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -48,8 +49,11 @@ class MyAppState extends State<MyApp> {
               theme: AppState.of(context).theme,
               autoDark: AppState.of(context).autoDark,
               autoDarkBlack: AppState.of(context).autoDarkBlack,
+              fontSize: AppState.of(context).fontSize,
             ),
-            home: new HomePage(),
+            home: new HomePage(
+              initialIndex: snapshot.data.getInt(PREFS_KEY_STARTUP_TAB) ?? 0,
+            ),
             localizationsDelegates: [
               _appLocaleDelegate,
               const AppLocalizationsDelegate(),
@@ -74,7 +78,7 @@ class MyAppState extends State<MyApp> {
     });
   }
 
-  Future loadPreferences() async {
+  Future<SharedPreferences> loadPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('auto_dark') ?? true) {
       this.brightness = DateTime.now().hour < 18 && DateTime.now().hour > 5
@@ -87,6 +91,6 @@ class MyAppState extends State<MyApp> {
       newLocale: Locale(language, ''),
     );
 
-    return true;
+    return prefs;
   }
 }
