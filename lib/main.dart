@@ -54,6 +54,7 @@ class MyAppState extends State<MyApp> {
             home: new HomePage(
               initialIndex: snapshot.data.getInt(PREFS_KEY_STARTUP_TAB) ?? 0,
             ),
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: [
               _appLocaleDelegate,
               const AppLocalizationsDelegate(),
